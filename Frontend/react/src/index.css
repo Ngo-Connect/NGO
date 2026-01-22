@@ -1,0 +1,163 @@
+/* src/index.css */
+:root {
+  /* Default Light Mode */
+  --bg-color: #f4f6f8;
+  --nav-bg: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --shadow: 0 4px 12px rgba(0,0,0,0.05);
+  --primary: #2e7d32;
+  --btn-text: #ffffff;
+}
+
+/* Grey Mode (Soft Dark) */
+[data-theme='grey'] {
+  --bg-color: #3a3b3c;       /* Dark Grey background */
+  --nav-bg: #242526;         /* Slightly darker navbar */
+  --text-primary: #e4e6eb;   /* Light text */
+  --text-secondary: #b0b3b8;
+  --shadow: 0 4px 12px rgba(0,0,0,0.4);
+  --primary: #4caf50;        /* Brighter green for contrast */
+  --btn-text: #ffffff;
+}
+
+/* Dark Mode (Pitch Black/Deep OLED) */
+[data-theme='dark'] {
+  --bg-color: #121212;       /* Almost Black */
+  --nav-bg: #000000;         /* Pitch Black */
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+  --shadow: 0 4px 12px rgba(255,255,255,0.1); /* White-ish shadow */
+  --primary: #66bb6a;
+  --btn-text: #000000;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-color); /* THIS makes it global */
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+:root {
+  --primary: #2e7d32;
+  --secondary: #1565c0;
+  --bg-light: #f5f5f5;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.auth-box {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-box h2 {
+  margin-top: 0;
+  color: var(--primary);
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.btn-primary { background-color: var(--primary); }
+.btn-secondary { background-color: var(--secondary); }
+.full-width { width: 100%; margin-top: 10px; }
+
+/* Add to src/index.css */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-text {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Only use this if the calc() fix doesn't work perfectly */
+body {
+  overflow: hidden; 
+}
+
+
+
+/* src/index.css */
+
+/* Hide default cursor */
+body, a, button {
+  cursor: none;
+}
+
+.mask-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  background-color: white; /* MUST be white for the inversion to work */
+  border-radius: 50%;
+  pointer-events: none; /* Allows clicks to pass through */
+  z-index: 9999;
+  
+  /* --- THE MAGIC LINE --- */
+  /* This calculates the color difference between the cursor and the content below */
+  mix-blend-mode: difference; 
+  
+  /* Center the cursor on the mouse point */
+  margin-left: -16px;
+  margin-top: -16px;
+
+  /* Smooth scaling animation */
+  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+}
+
+/* State: Hovering over text/links */
+.mask-cursor.hovered {
+  width: 80px;
+  height: 80px;
+  margin-left: -40px; /* Re-center (half of width) */
+  margin-top: -40px;  /* Re-center (half of height) */
+  background-color: white; 
+}
