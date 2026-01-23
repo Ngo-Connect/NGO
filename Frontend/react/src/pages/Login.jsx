@@ -37,7 +37,7 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.message || "Login failed Invalid Username/Password");
       }
 
       localStorage.setItem("user", JSON.stringify(data));
