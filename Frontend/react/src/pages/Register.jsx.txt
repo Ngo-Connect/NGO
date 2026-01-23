@@ -1,0 +1,501 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaUser, FaEnvelope, FaLock, FaPhone, FaIdCard, FaMapMarkerAlt, FaCheckCircle } from 'react-icons/fa';
+
+const Register = () => {
+  const navigate = useNavigate();
+
+  // --- State for Form Data ---
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone_no: '',
+    pan_no: '',
+    roleName: 'Beneficiary', // Default role
+    address: '',
+    state_id: '', // Placeholder for future select
+    city_id: '',  // Placeholder for future select
+    reg_no: ''    // Will be generated
+  });
+
+  // --- State for UI (Errors, Loading) ---
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
+
+  // --- Generate Random reg_no on Component Mount ---
+  useEffect(() => {
+    // Generate a random 9-digit number that fits in an INT
+    const randomRegNo = Math.floor(100000000 + Math.random() * 900000000);
+    setFormData(prev => ({ ...prev, reg_no: randomRegNo.toString() }));
+  }, []);
+
+  // --- Handle Input Change ---
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error for this field when user types
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  // --- Validation ---
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.username.trim()) newErrors.username = "Username is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+    if (!formData.phone_no.trim()) {
+      newErrors.phone_no = "Phone number is required";
+    } else if (!/^\d{10}$/.test(formData.phone_no.replace(/[-()\s]/g, ''))) {
+       newErrors.phone_no = "Enter a valid 10-digit phone number";
+    }
+    if (!formData.pan_no.trim()) {
+      newErrors.pan_no = "PAN number is required";
+    } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan_no)) {
+      newErrors.pan_no = "Invalid PAN format (e.g., ABCDE1234F)";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // --- Handle Form Submit ---
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setApiError('');
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Prepare payload (exclude confirmPassword, ensure numeric types)
+      const payload = {
+        ...formData,
+        state_id: formData.state_id ? parseInt(formData.state_id) : null,
+        city_id: formData.city_id ? parseInt(formData.city_id) : null,
+        reg_no: parseInt(formData.reg_no) // Send as an integer
+      };
+      delete payload.confirmPassword;
+
+      const response = await fetch('http://localhost:5296/api/Auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed. Please try again.');
+      }
+
+      // On Success
+      alert("Registration successful! Please login.");
+      navigate('/login');
+
+    } catch (error) {
+      setApiError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // --- Styles ---
+  const styles = {
+    container: {
+      display: 'flex',
+      minHeight: '100vh',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    },
+    leftPanel: {
+      flex: 1,
+      backgroundColor: '#10b981', // Emerald Green
+      color: 'white',
+      padding: '60px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      position: 'relative',
+      overflow: 'hidden',
+    },
+    heading: {
+      fontSize: '3.5rem',
+      fontWeight: 'bold',
+      lineHeight: '1.2',
+      marginBottom: '20px',
+    },
+    subText: {
+      fontSize: '1.2rem',
+      marginBottom: '40px',
+      maxWidth: '500px',
+      lineHeight: '1.6',
+    },
+    benefitList: {
+      listStyle: 'none',
+      padding: 0,
+      margin: 0,
+    },
+    benefitItem: {
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: '1.1rem',
+      marginBottom: '15px',
+    },
+    checkIcon: {
+      marginRight: '15px',
+      fontSize: '1.3rem',
+      opacity: '0.8',
+    },
+    rightPanel: {
+      flex: 1,
+      padding: '60px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      backgroundColor: '#f8f9fa',
+    },
+    formContainer: {
+      maxWidth: '500px',
+      margin: '0 auto',
+      width: '100%',
+    },
+    backLink: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+      color: '#10b981',
+      fontWeight: '600',
+      marginBottom: '30px',
+    },
+    formTitle: {
+      fontSize: '2.5rem',
+      fontWeight: 'bold',
+      color: '#333',
+      marginBottom: '10px',
+    },
+    formSubtitle: {
+      color: '#666',
+      marginBottom: '30px',
+    },
+    inputGroup: {
+      marginBottom: '20px',
+    },
+    label: {
+      display: 'block',
+      marginBottom: '8px',
+      fontWeight: '600',
+      color: '#555',
+    },
+    inputWrapper: {
+      position: 'relative',
+    },
+    inputIcon: {
+      position: 'absolute',
+      top: '50%',
+      left: '15px',
+      transform: 'translateY(-50%)',
+      color: '#aaa',
+    },
+    input: {
+      width: '100%',
+      padding: '12px 15px 12px 45px',
+      borderRadius: '8px',
+      border: '1px solid #ddd',
+      fontSize: '1rem',
+      transition: 'border-color 0.3s',
+      outline: 'none',
+      boxSizing: 'border-box',
+    },
+    select: {
+      width: '100%',
+      padding: '12px 15px',
+      borderRadius: '8px',
+      border: '1px solid #ddd',
+      fontSize: '1rem',
+      transition: 'border-color 0.3s',
+      outline: 'none',
+      boxSizing: 'border-box',
+      backgroundColor: '#fff',
+      appearance: 'none', // Removes default arrow for custom styling if needed
+    },
+    errorMsg: {
+      color: '#e53e3e',
+      fontSize: '0.85rem',
+      marginTop: '5px',
+    },
+    apiError: {
+      padding: '10px',
+      backgroundColor: '#fed7d7',
+      color: '#c53030',
+      borderRadius: '8px',
+      marginBottom: '20px',
+      textAlign: 'center',
+    },
+    submitBtn: {
+      width: '100%',
+      padding: '15px',
+      borderRadius: '8px',
+      border: 'none',
+      backgroundColor: '#10b981',
+      color: 'white',
+      fontSize: '1.1rem',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s',
+      marginTop: '10px',
+    },
+    loginLink: {
+      textAlign: 'center',
+      marginTop: '20px',
+      color: '#666',
+    },
+    linkText: {
+      color: '#10b981',
+      textDecoration: 'none',
+      fontWeight: '600',
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      {/* --- Left Panel (Welcome & Benefits) --- */}
+      <div style={styles.leftPanel}>
+        {/* Optional background image or pattern could go here */}
+        <h1 style={styles.heading}>Join Our Community<br />of Change-Makers</h1>
+        <p style={styles.subText}>
+          Create an account to start your journey of making a positive impact. 
+          Whether you're a donor, an NGO, or a beneficiary, we're glad you're here.
+        </p>
+        <ul style={styles.benefitList}>
+          <li style={styles.benefitItem}>
+            <FaCheckCircle style={styles.checkIcon} /> Connect with trusted NGOs
+          </li>
+          <li style={styles.benefitItem}>
+            <FaCheckCircle style={styles.checkIcon} /> Track your donations transparently
+          </li>
+          <li style={styles.benefitItem}>
+            <FaCheckCircle style={styles.checkIcon} /> Find support and resources
+          </li>
+          <li style={styles.benefitItem}>
+            <FaCheckCircle style={styles.checkIcon} /> Be part of a global movement
+          </li>
+        </ul>
+      </div>
+
+      {/* --- Right Panel (Registration Form) --- */}
+      <div style={styles.rightPanel}>
+        <div style={styles.formContainer}>
+          <Link to="/" style={styles.backLink}>
+            <FaArrowLeft style={{ marginRight: '8px' }} /> Back to Home
+          </Link>
+          <h2 style={styles.formTitle}>Sign Up</h2>
+          <p style={styles.formSubtitle}>Please fill in your details to create an account.</p>
+
+          {apiError && <div style={styles.apiError}>{apiError}</div>}
+
+          <form onSubmit={handleSubmit}>
+            {/* Username & Role (Side-by-side) */}
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>Username</label>
+                <div style={styles.inputWrapper}>
+                  <FaUser style={styles.inputIcon} />
+                  <input
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    style={{...styles.input, borderColor: errors.username ? '#e53e3e' : '#ddd'}}
+                    placeholder="Enter username"
+                  />
+                </div>
+                {errors.username && <div style={styles.errorMsg}>{errors.username}</div>}
+              </div>
+
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>I am a...</label>
+                <select
+                  name="roleName"
+                  value={formData.roleName}
+                  onChange={handleChange}
+                  style={styles.select}
+                >
+                  {/* Roles from your image_0.png */}
+                  <option value="Beneficiary">Beneficiary</option>
+                  <option value="Donor">Donor</option>
+                  <option value="NGO">NGO</option>
+                  {/* Admin is usually not self-registerable */}
+                </select>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Email Address</label>
+              <div style={styles.inputWrapper}>
+                <FaEnvelope style={styles.inputIcon} />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  style={{...styles.input, borderColor: errors.email ? '#e53e3e' : '#ddd'}}
+                  placeholder="Enter your email"
+                />
+              </div>
+              {errors.email && <div style={styles.errorMsg}>{errors.email}</div>}
+            </div>
+
+            {/* Password & Confirm Password */}
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>Password</label>
+                <div style={styles.inputWrapper}>
+                  <FaLock style={styles.inputIcon} />
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    style={{...styles.input, borderColor: errors.password ? '#e53e3e' : '#ddd'}}
+                    placeholder="Create password"
+                  />
+                </div>
+                {errors.password && <div style={styles.errorMsg}>{errors.password}</div>}
+              </div>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>Confirm Password</label>
+                <div style={styles.inputWrapper}>
+                  <FaLock style={styles.inputIcon} />
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    style={{...styles.input, borderColor: errors.confirmPassword ? '#e53e3e' : '#ddd'}}
+                    placeholder="Confirm password"
+                  />
+                </div>
+                {errors.confirmPassword && <div style={styles.errorMsg}>{errors.confirmPassword}</div>}
+              </div>
+            </div>
+
+            {/* Phone & PAN */}
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>Phone Number</label>
+                <div style={styles.inputWrapper}>
+                  <FaPhone style={styles.inputIcon} />
+                  <input
+                    type="tel"
+                    name="phone_no"
+                    value={formData.phone_no}
+                    onChange={handleChange}
+                    style={{...styles.input, borderColor: errors.phone_no ? '#e53e3e' : '#ddd'}}
+                    placeholder="e.g., 9876543210"
+                  />
+                </div>
+                {errors.phone_no && <div style={styles.errorMsg}>{errors.phone_no}</div>}
+              </div>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>PAN Number</label>
+                <div style={styles.inputWrapper}>
+                  <FaIdCard style={styles.inputIcon} />
+                  <input
+                    type="text"
+                    name="pan_no"
+                    value={formData.pan_no}
+                    onChange={handleChange}
+                    style={{...styles.input, borderColor: errors.pan_no ? '#e53e3e' : '#ddd'}}
+                    placeholder="e.g., ABCDE1234F"
+                    maxLength={10}
+                  />
+                </div>
+                {errors.pan_no && <div style={styles.errorMsg}>{errors.pan_no}</div>}
+              </div>
+            </div>
+
+            {/* Address (Optional in DB) */}
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Address (Optional)</label>
+              <div style={styles.inputWrapper}>
+                <FaMapMarkerAlt style={styles.inputIcon} />
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  style={styles.input}
+                  placeholder="Enter your address"
+                />
+              </div>
+            </div>
+
+            {/* State & City (Placeholders for now) */}
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>State (Optional)</label>
+                <select name="state_id" style={styles.select} disabled>
+                  <option value="">Select State</option>
+                  {/* Future: Populate from API */}
+                </select>
+              </div>
+              <div style={{ ...styles.inputGroup, flex: 1 }}>
+                <label style={styles.label}>City (Optional)</label>
+                <select name="city_id" style={styles.select} disabled>
+                  <option value="">Select City</option>
+                  {/* Future: Populate from API based on State */}
+                </select>
+              </div>
+            </div>
+            
+            {/* Hidden field for reg_no, for debugging you can uncomment below */}
+            {/* <div style={styles.inputGroup}>
+                <label style={styles.label}>Registration No. (Auto-generated)</label>
+                <input type="text" value={formData.reg_no} readOnly style={{...styles.input, backgroundColor: '#eee'}} />
+            </div> */}
+
+            <button
+              type="submit"
+              style={{...styles.submitBtn, opacity: isLoading ? 0.7 : 1, cursor: isLoading ? 'not-allowed' : 'pointer'}}
+              disabled={isLoading}
+              onMouseEnter={(e) => !isLoading && (e.target.style.backgroundColor = '#0d9668')}
+              onMouseLeave={(e) => !isLoading && (e.target.style.backgroundColor = '#10b981')}
+            >
+              {isLoading ? 'Creating Account...' : 'Sign Up'}
+            </button>
+
+            <p style={styles.loginLink}>
+              Already have an account?{' '}
+              <Link to="/login" style={styles.linkText}>
+                Sign in
+              </Link>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
