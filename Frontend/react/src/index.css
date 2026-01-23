@@ -161,3 +161,17 @@ body, a, button {
   margin-top: -40px;  /* Re-center (half of height) */
   background-color: white; 
 }
+
+
+/* src/index.css */
+
+/* Utility class to hide scrollbar but allow scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
