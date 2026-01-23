@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: projectdb
+-- Host: localhost    Database: cdacprojectdb
 -- ------------------------------------------------------
--- Server version	8.2.0
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -235,7 +235,7 @@ CREATE TABLE `users` (
   CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_users_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`city_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_users_state` FOREIGN KEY (`state_id`) REFERENCES `states` (`state_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'SatyavratBind12','satya@123',3,'7454125486','satya@gmail.com','YSPQS2076G','Active','Durg, Chattisgarh',5,182,NULL),(2,'YashSinhe17','yash@123',1,'9475124568','yashsinhe@gmail.com','NZVPS1976F','Active','Yavatmal, Maharashtra',14,491,NULL),(3,'JanhaviBhor08','janhavi@123',2,'6451245789','janhavi@gmail.com','XCTYP2387T','Active','Mumbai, Maharashtra',14,472,NULL),(4,'NeelamBhapkar26','neelam@123',4,'8974541256','neelam@gmail.com','HABGS6518K','Active','Pune, Maharashtra',14,481,NULL);
+INSERT INTO `users` VALUES (1,'SatyavratBind12','satya@123',3,'7454125486','satya@gmail.com','YSPQS2076G','Active','Durg, Chattisgarh',5,182,NULL),(2,'YashSinhe17','yash@123',1,'9475124568','yashsinhe@gmail.com','NZVPS1976F','Active','Yavatmal, Maharashtra',14,491,NULL),(3,'JanhaviBhor08','janhavi@123',2,'6451245789','janhavi@gmail.com','XCTYP2387T','Active','Mumbai, Maharashtra',14,472,NULL),(4,'NeelamBhapkar26','neelam@123',4,'8974541256','neelam@gmail.com','HABGS6518K','Active','Pune, Maharashtra',14,481,NULL),(5,'AnkitBhor','ankit@123',4,'3457687893','ankit@gmail.com','ABFGB4566K','Active','South Goa, Goa',6,205,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -257,4 +257,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-01-21 12:45:02
+-- Dump completed on 2026-01-23 13:01:53
