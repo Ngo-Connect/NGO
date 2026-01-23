@@ -3,3 +3,8 @@
 *.suo
 **/bin/
 **/obj/
+# Ignore all node_modules in any subfolder
+**/node_modules/
+# Ignore all build folders
+**/build/
+**/target/
