@@ -1,13 +1,28 @@
-/* src/index.css */
+/* =========================================
+   1. GLOBAL IMPORTS & FONTS
+   ========================================= */
+/* Import Professional Font: Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* =========================================
+   2. THEME VARIABLES (:root)
+   ========================================= */
 :root {
-  /* Default Light Mode */
+  /* Global Font Variable */
+  --font-family-main: 'Inter', sans-serif;
+
+  /* Default Light Mode Colors */
   --bg-color: #f4f6f8;
   --nav-bg: #ffffff;
   --text-primary: #333333;
   --text-secondary: #555555;
   --shadow: 0 4px 12px rgba(0,0,0,0.05);
-  --primary: #2e7d32;
+  
+  /* Brand Colors */
+  --primary: #2e7d32;   /* Emerald Green */
+  --secondary: #1565c0; /* Blue */
   --btn-text: #ffffff;
+  --bg-light: #f5f5f5;
 }
 
 /* Grey Mode (Soft Dark) */
@@ -32,21 +47,75 @@
   --btn-text: #000000;
 }
 
+/* =========================================
+   3. GLOBAL RESET & BODY STYLES
+   ========================================= */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-color); /* THIS makes it global */
+  padding: 0;
+  /* Apply Inter Globally */
+  font-family: 'Inter', sans-serif !important; 
+  background-color: var(--bg-color);
   color: var(--text-primary);
+  
+  /* Smooth Theme Transition */
   transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* Hide default cursor (since you use a custom mask cursor) */
+  cursor: none; 
+
+  /* Prevent scrolling on body (handled by inner containers) */
+  overflow: hidden; 
 }
 
-
-:root {
-  --primary: #2e7d32;
-  --secondary: #1565c0;
-  --bg-light: #f5f5f5;
+/* Force Bootstrap elements to use Inter */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, 
+button, input, select, textarea, .btn, a {
+  font-family: 'Inter', sans-serif !important;
 }
 
+/* Ensure links and buttons also hide default cursor */
+a, button, input, select, textarea, .btn {
+  cursor: none !important;
+}
+
+/* =========================================
+   4. CUSTOM CURSOR STYLES
+   ========================================= */
+.mask-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  background-color: white; /* MUST be white for difference mode */
+  border-radius: 50%;
+  pointer-events: none; /* Allows clicks to pass through */
+  z-index: 9999;
+  
+  /* The Magic Inversion Effect */
+  mix-blend-mode: difference; 
+  
+  /* Center the cursor */
+  margin-left: -16px;
+  margin-top: -16px;
+
+  /* Smooth scaling animation */
+  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+}
+
+/* Hover State for Links/Buttons */
+.mask-cursor.hovered {
+  width: 80px;
+  height: 80px;
+  margin-left: -40px; 
+  margin-top: -40px;  
+  background-color: white; 
+}
+
+/* =========================================
+   5. AUTH & FORM STYLES
+   ========================================= */
 .auth-container {
   display: flex;
   justify-content: center;
@@ -91,22 +160,30 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
+/* =========================================
+   6. BUTTON UTILITIES
+   ========================================= */
 .btn {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  /* cursor: pointer; (Removed to support custom cursor) */
   font-size: 1.2rem;
   color: white;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .btn-primary { background-color: var(--primary); }
 .btn-secondary { background-color: var(--secondary); }
 .full-width { width: 100%; margin-top: 10px; }
 
-/* Add to src/index.css */
+/* =========================================
+   7. ANIMATIONS
+   ========================================= */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -116,56 +193,10 @@ body {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Only use this if the calc() fix doesn't work perfectly */
-body {
-  overflow: hidden; 
-}
-
-
-
-/* src/index.css */
-
-/* Hide default cursor */
-body, a, button {
-  cursor: none;
-}
-
-.mask-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  background-color: white; /* MUST be white for the inversion to work */
-  border-radius: 50%;
-  pointer-events: none; /* Allows clicks to pass through */
-  z-index: 9999;
-  
-  /* --- THE MAGIC LINE --- */
-  /* This calculates the color difference between the cursor and the content below */
-  mix-blend-mode: difference; 
-  
-  /* Center the cursor on the mouse point */
-  margin-left: -16px;
-  margin-top: -16px;
-
-  /* Smooth scaling animation */
-  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease;
-}
-
-/* State: Hovering over text/links */
-.mask-cursor.hovered {
-  width: 80px;
-  height: 80px;
-  margin-left: -40px; /* Re-center (half of width) */
-  margin-top: -40px;  /* Re-center (half of height) */
-  background-color: white; 
-}
-
-
-/* src/index.css */
-
-/* Utility class to hide scrollbar but allow scrolling */
+/* =========================================
+   8. SCROLLBAR UTILITIES
+   ========================================= */
+/* Utility to hide scrollbar but allow scrolling */
 .hide-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */

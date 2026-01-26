@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa"; // Import the arrow icon
+import { FaArrowRight, FaChevronDown } from "react-icons/fa"; 
 import videoBg from "../assets/background_video3.mp4";
 
 // --- IMPORT THE NEW COMPONENTS ---
@@ -27,35 +27,38 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // --- UPDATED BUTTON STYLES FOR "CHUBBY" LOOK ---
+  // --- BUTTON STYLES ---
   const btnStyles = {
     primary: {
-      backgroundColor: '#10b981', // Bright Emerald Green
+      backgroundColor: '#10b981', 
       color: 'white',
-      padding: '18px 40px', // INCREASED PADDING (Chubbier)
-      borderRadius: '60px', // Rounder corners
+      padding: '18px 40px', 
+      borderRadius: '60px', 
       border: 'none',
-      fontSize: '1.1rem',   // Slightly larger text
+      fontSize: '1.1rem',   
       fontWeight: '700',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center', 
       gap: '10px',
-      boxShadow: '0 8px 20px rgba(16, 185, 129, 0.4)', // Softer, larger shadow
-      transition: 'all 0.3s ease', // Smooth transition for hover effects
+      boxShadow: '0 8px 20px rgba(16, 185, 129, 0.4)', 
+      transition: 'all 0.3s ease', 
+      width: '100%', 
     },
     glass: {
-      backgroundColor: 'rgba(255, 255, 255, 0.15)', // Slightly more visible glass
+      backgroundColor: 'rgba(255, 255, 255, 0.15)', 
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
-      border: '2px solid rgba(255, 255, 255, 0.5)', // Thicker, cute border
+      border: '2px solid rgba(255, 255, 255, 0.5)', 
       color: 'white',
-      padding: '18px 40px', // INCREASED PADDING (Chubbier)
-      borderRadius: '60px', // Rounder corners
-      fontSize: '1.1rem',   // Slightly larger text
+      padding: '18px 40px', 
+      borderRadius: '60px', 
+      fontSize: '1.1rem',   
       fontWeight: '700',
       cursor: 'pointer',
       transition: 'all 0.3s ease',
+      width: '100%', 
     }
   };
 
@@ -80,6 +83,34 @@ const Home = () => {
         position: "relative"
       }}
     >
+      {/* --- RESPONSIVE CSS & ANIMATION --- */}
+      <style>
+        {`
+          @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+          }
+          .bounce-arrow {
+            animation: bounce 2s infinite;
+          }
+
+          /* Default (Desktop) Sizes */
+          .hero-title { font-size: 3rem; }
+          .hero-desc { font-size: 1.2rem; }
+          .hero-btn-group { flex-direction: row; }
+          .hero-btn-wrapper { width: auto; }
+
+          /* Mobile Adjustments (Max Width 768px) */
+          @media (max-width: 768px) {
+            .hero-title { font-size: 2rem !important; }
+            .hero-desc { font-size: 1rem !important; padding: 0 15px; }
+            .hero-btn-group { flex-direction: column !important; gap: 15px !important; width: 100%; padding: 0 20px; }
+            .hero-btn-wrapper { width: 100% !important; }
+          }
+        `}
+      </style>
+
       {/* =========================================
           SECTION 1: HERO (Video Background)
          ========================================= */}
@@ -116,26 +147,27 @@ const Home = () => {
           }}
         ></div>
 
-        {/* 3. MAIN CENTER CONTENT */}
+        {/* 3. MAIN CENTER CONTENT (MODIFIED HERE) */}
         <div
           className="container"
           style={{
             position: "relative",
             zIndex: 1,
             textAlign: "center",
-            paddingTop: "20vh", 
             color: "#fff",
-            height: "100%",
+            height: "100%", 
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center", // Centers vertically
+            // paddingTop: "20vh",  <-- REMOVED THIS
           }}
         >
+          {/* Responsive Title */}
           <h1
             key={index}
-            className="fade-text"
+            className="fade-text hero-title"
             style={{
-              fontSize: "3rem",
               marginBottom: "10px",
               textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
               minHeight: "60px",
@@ -144,10 +176,11 @@ const Home = () => {
             {greetings[index]} to NGO-Connect
           </h1>
 
+          {/* Responsive Description */}
           <p
+            className="hero-desc"
             style={{
-              fontSize: "1.2rem",
-              marginBottom: "40px", // More space before buttons
+              marginBottom: "40px", 
               maxWidth: "800px",
               lineHeight: "1.6",
               textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
@@ -156,11 +189,13 @@ const Home = () => {
             Connecting Donors, NGOs, and Beneficiaries for a better tomorrow. We bridge the gap between resources and need. Join us in building sustainable futures for communities through education, healthcare, food, etc.
           </p>
 
-          {/* --- UPDATED BUTTONS SECTION --- */}
-          <div style={{ display: "flex", gap: "25px", justifyContent: "center", marginTop: "10px" }}>
+          {/* --- RESPONSIVE BUTTONS SECTION --- */}
+          <div 
+            className="hero-btn-group"
+            style={{ display: "flex", gap: "25px", justifyContent: "center", marginTop: "10px" }}
+          >
             
-            {/* Primary Button (Green Pill with Arrow) */}
-            <Link to="/login" style={{ textDecoration: 'none' }}>
+            <Link to="/login" className="hero-btn-wrapper" style={{ textDecoration: 'none' }}>
               <button 
                 style={btnStyles.primary}
                 onMouseEnter={(e) => {
@@ -176,8 +211,7 @@ const Home = () => {
               </button>
             </Link>
 
-            {/* Secondary Button (Glass/Blur Effect) */}
-            <Link to="/register" style={{ textDecoration: 'none' }}>
+            <Link to="/register" className="hero-btn-wrapper" style={{ textDecoration: 'none' }}>
               <button 
                 style={btnStyles.glass}
                 onMouseEnter={(e) => {
@@ -196,11 +230,27 @@ const Home = () => {
           </div>
         </div>
 
-        {/* 4. CORNER TEXTS */}
-        <div style={{ ...bottomTextStyle, left: '20px' }}>
+        {/* 4. CORNER TEXTS (Hidden on Mobile) */}
+        <div className="d-none d-md-block" style={{ ...bottomTextStyle, left: '20px' }}>
           &copy; Copyright Group-1 @ CDAC-ACTS Know-IT
         </div>
-        <div style={{ ...bottomTextStyle, right: '20px', textAlign: 'right' }}>
+
+        {/* --- DOWNWARD BOUNCING ARROW --- */}
+        <div 
+          className="position-absolute bottom-0 start-50 translate-middle-x mb-4"
+          style={{ zIndex: 2 }}
+        >
+          <div 
+            className="bounce-arrow"
+            style={{ cursor: 'pointer', opacity: 0.8 }}
+            onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+          >
+            <FaChevronDown size={32} color="white" />
+          </div>
+        </div>
+        {/* ------------------------------- */}
+
+        <div className="d-none d-md-block" style={{ ...bottomTextStyle, right: '20px', textAlign: 'right' }}>
           Made with <span style={{ color: '#ff4d4d', fontSize: '1.2em' }}>&hearts;</span> by Group-1 at Know-IT(Pune)
         </div>
       </div>

@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import videoBg from "../assets/register_background.mp4";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Register = () => {
   const navigate = useNavigate();
-
-  // --- State Variables ---
   const [role, setRole] = useState("Donor");
-
-  // Dropdown Data (Fetched from API)
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
-
-  // Selected Values (IDs) - Renamed for clarity to match your usage
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
 
-  // --- 1. Fetch States on Load ---
   useEffect(() => {
     fetch("http://localhost:5096/api/Auth/states")
       .then((res) => res.json())
@@ -24,7 +18,6 @@ const Register = () => {
       .catch((err) => console.error("Error fetching states:", err));
   }, []);
 
-  // --- 2. Fetch Cities when State Changes ---
   useEffect(() => {
     if (state) {
       fetch(`http://localhost:5096/api/Auth/cities/${state}`)
@@ -36,11 +29,10 @@ const Register = () => {
     }
   }, [state]);
 
-  // --- 3. Handle Form Submit ---
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const payload = {
+      // ... (payload construction remains same)
       username: e.target[0].value,
       email: e.target[1].value,
       phoneNo: e.target[2].value,
@@ -51,8 +43,8 @@ const Register = () => {
       cityId: parseInt(city),
       roleName: role,
     };
-
-    try {
+    // ... (fetch logic remains same)
+     try {
       const response = await fetch("http://localhost:5096/api/Auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,266 +64,163 @@ const Register = () => {
   };
 
   return (
-    <div style={styles.page}>
-      <video autoPlay loop muted style={styles.video}>
+    <div className="position-relative w-100 h-100 d-flex align-items-center justify-content-center overflow-hidden" style={{ height: '100vh' }}>
+      
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        className="position-absolute w-100 h-100"
+        style={{ objectFit: "cover", zIndex: -2 }}
+      >
         <source src={videoBg} type="video/mp4" />
       </video>
-      <div style={styles.overlay}></div>
 
-      <div style={styles.card}>
-        <h2 style={styles.heading}>Create Account</h2>
-        <p style={styles.subheading}>Join NGO-Connect and make an impact 🌱</p>
+      {/* Overlay - Made slightly darker so the transparent form pops */}
+      <div 
+        className="position-absolute w-100 h-100" 
+        style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.6))", zIndex: -1 }}
+      ></div>
 
-        {/* Role Tabs */}
-        <div style={styles.roleTabs}>
-          {["NGO", "Donor", "Beneficiary"].map((r) => (
-            <button
-              key={r}
-              type="button"
-              onClick={() => setRole(r)}
-              style={{
-                ...styles.roleBtn,
-                background:
-                  role === r
-                    ? "linear-gradient(135deg, #43cea2, #185a9d)"
-                    : "transparent",
-                color: role === r ? "#fff" : "#333",
-              }}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Username / Organization Name</label>
-            <input
-              type="text"
-              placeholder="Enter name"
-              style={styles.input}
-              required
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Email</label>
-            <input
-              type="email"
-              placeholder="name@example.com"
-              style={styles.input}
-              required
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Phone Number</label>
-            <input
-              type="tel"
-              placeholder="Enter phone number"
-              style={styles.input}
-              required
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>PAN Number</label>
-            <input
-              type="text"
-              placeholder="ABCDE1234F"
-              style={styles.input}
-              required
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Password</label>
-            <input
-              type="password"
-              placeholder="Create password"
-              style={styles.input}
-              required
-            />
-          </div>
-
-          {/* Address Section */}
-          <div style={styles.addressBox}>
-            <label style={styles.label}>Address</label>
-            <textarea
-              placeholder="Enter full address"
-              rows="3"
-              style={styles.textarea}
-              required
-            />
-
-            <div style={styles.addressRow}>
-              {/* STATE DROPDOWN */}
-              <select
-                value={state}
-                onChange={(e) => {
-                  setState(e.target.value);
-                  setCity(""); // Reset city when state changes
-                }}
-                style={styles.select}
-                required
-              >
-                <option value="">Select State</option>
-                {statesList.map((st) => (
-                  <option key={st.stateId} value={st.stateId}>
-                    {st.stateName}
-                  </option>
-                ))}
-              </select>
-
-              {/* CITY DROPDOWN */}
-              <select
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                style={styles.select}
-                disabled={!state}
-                required
-              >
-                <option value="">Select City</option>
-                {citiesList.map((ct) => (
-                  <option key={ct.cityId} value={ct.cityId}>
-                    {ct.cityName}
-                  </option>
-                ))}
-              </select>
+      {/* Glass Card */}
+      <div className="container">
+        <div 
+          className="card border-0 mx-auto shadow-lg"
+          style={styles.glassCard}
+        >
+          <div className="card-body p-4">
+            
+            {/* Header */}
+            <div className="text-center mb-3">
+              {/* Changed text color to white for better contrast on transparent background */}
+              <h3 className="fw-bold m-0 text-white">Create Account</h3>
+              <p className="text-white-50 small mb-0">Join NGO-Connect and make an impact 🌱</p>
             </div>
-          </div>
 
-          <button type="submit" style={styles.submitBtn}>
-            Register as {role}
-          </button>
-        </form>
+            {/* Role Tabs */}
+            <div className="d-flex justify-content-center gap-2 mb-3 p-1 rounded-3 bg-black bg-opacity-25 mx-auto" style={{ maxWidth: "500px" }}>
+              {["NGO", "Donor", "Beneficiary"].map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setRole(r)}
+                  className={`btn btn-sm flex-fill fw-bold transition-all ${role === r ? 'text-white shadow-sm' : 'text-white-50'}`}
+                  style={{
+                    background: role === r ? "linear-gradient(135deg, #10b981, #059669)" : "transparent",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "6px",
+                    fontSize: "0.9rem"
+                  }}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit}>
+              <div className="row g-2"> 
+                
+                {/* Inputs - Changed bg to handle transparency better */}
+                <div className="col-md-6">
+                  <input type="text" className="form-control form-control-sm bg-light bg-opacity-50 text-dark border-0" placeholder="Username / Org Name" required />
+                </div>
+
+                <div className="col-md-6">
+                  <input 
+                    type="email" 
+                    className="form-control form-control-sm bg-light bg-opacity-50 text-dark border-0" 
+                    placeholder="Email Address" 
+                    required 
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.com$"
+                    title="Please enter a valid email ending in .com"
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <input type="tel" className="form-control form-control-sm bg-light bg-opacity-50 text-dark border-0" placeholder="Phone Number" required />
+                </div>
+
+                <div className="col-md-6">
+                  <input type="text" className="form-control form-control-sm bg-light bg-opacity-50 text-dark border-0" placeholder="PAN Number" required />
+                </div>
+
+                <div className="col-12">
+                  <input type="password" className="form-control form-control-sm bg-light bg-opacity-50 text-dark border-0" placeholder="Password" required />
+                </div>
+
+                <div className="col-12">
+                  <textarea className="form-control form-control-sm bg-light bg-opacity-50 text-dark border-0" rows="2" placeholder="Full Address" required style={{ resize: 'none' }}></textarea>
+                </div>
+
+                <div className="col-md-6">
+                  <select 
+                    className="form-select form-select-sm bg-light bg-opacity-50 text-dark border-0"
+                    value={state}
+                    onChange={(e) => { setState(e.target.value); setCity(""); }}
+                    required
+                  >
+                    <option value="">Select State</option>
+                    {statesList.map((st) => (
+                      <option key={st.stateId} value={st.stateId}>{st.stateName}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-6">
+                  <select 
+                    className="form-select form-select-sm bg-light bg-opacity-50 text-dark border-0"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    disabled={!state}
+                    required
+                  >
+                    <option value="">Select City</option>
+                    {citiesList.map((ct) => (
+                      <option key={ct.cityId} value={ct.cityId}>{ct.cityName}</option>
+                    ))}
+                  </select>
+                </div>
+
+              </div>
+
+              {/* Footer Actions */}
+              <div className="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-white border-opacity-25">
+                <div className="small text-white-50">
+                  <span>Have an account? </span>
+                  <Link to="/login" className="text-decoration-none fw-bold text-white">Login</Link>
+                </div>
+                
+                <button 
+                  type="submit" 
+                  className="btn btn-sm text-white fw-bold px-4 rounded-pill shadow-sm"
+                  style={{ background: "linear-gradient(135deg, #10b981, #059669)", border: "none" }}
+                >
+                  Register
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Register;
-
-/* ===================== STYLES ===================== */
 const styles = {
-  page: {
-    position: "fixed",
-    top: "70px",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-  video: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    zIndex: -2,
-  },
-  overlay: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    background: "linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4))",
-    zIndex: -1,
-  },
-  card: {
-    background: "rgba(255,255,255,0.9)",
-    backdropFilter: "blur(12px)",
-    borderRadius: "18px",
-    padding: "28px",
-    width: "100%",
-    maxWidth: "480px",
-    maxHeight: "90vh",
-    overflowY: "auto",
-    boxShadow: "0 20px 45px rgba(0,0,0,0.3)",
-  },
-  heading: {
-    textAlign: "center",
-    fontSize: "26px",
-    fontWeight: "700",
-    color: "#185a9d",
-  },
-  subheading: {
-    textAlign: "center",
-    marginBottom: "20px",
-    color: "#555",
-  },
-  roleTabs: {
-    display: "flex",
-    gap: "8px",
-    background: "#f3f4f6",
-    padding: "6px",
-    borderRadius: "12px",
-    marginBottom: "18px",
-  },
-  roleBtn: {
-    flex: 1,
-    border: "none",
-    padding: "9px",
-    borderRadius: "10px",
-    fontWeight: "600",
-    cursor: "pointer",
-    transition: "0.3s",
-  },
-  inputGroup: {
-    marginBottom: "12px",
-  },
-  label: {
-    fontSize: "14px",
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: "4px",
-    display: "block",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    borderRadius: "10px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "14px",
-  },
-  textarea: {
-    width: "100%",
-    padding: "10px",
-    borderRadius: "10px",
-    border: "1px solid #ccc",
-    outline: "none",
-    fontSize: "14px",
-    resize: "none",
-  },
-  addressBox: {
-    marginTop: "10px",
-    marginBottom: "16px",
-  },
-  addressRow: {
-    display: "flex",
-    gap: "10px",
-    marginTop: "10px",
-  },
-  select: {
-    flex: 1,
-    padding: "10px",
-    borderRadius: "10px",
-    border: "1px solid #ccc",
-    fontSize: "14px",
-  },
-  submitBtn: {
-    width: "100%",
-    padding: "12px",
-    border: "none",
-    borderRadius: "12px",
-    background: "linear-gradient(135deg, #43cea2, #185a9d)",
-    color: "#fff",
-    fontSize: "16px",
-    fontWeight: "700",
-    cursor: "pointer",
-    marginTop: "10px",
-    boxShadow: "0 6px 15px rgba(0,0,0,0.25)",
-  },
+  glassCard: {
+    maxWidth: "850px",
+    // UPDATED: Much lower opacity for more transparency (0.25 and 0.1 alpha)
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1))",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    // UPDATED: More subtle border
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    borderRadius: "20px",
+  }
 };
+
+export default Register;

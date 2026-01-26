@@ -1,83 +1,87 @@
-import React from 'react';
-import { FaSearch, FaHandsHelping, FaChartLine } from 'react-icons/fa';
+import React from "react";
+import { FaSearch, FaHandsHelping, FaChartLine } from "react-icons/fa";
 
 const OurProcessSection = () => {
   const steps = [
     {
       icon: <FaSearch />,
       title: "Identify Needs",
-      description: "We work directly with communities to understand their most pressing challenges and priorities."
+      description: "We work directly with communities to understand their most pressing challenges and priorities.",
+      color: "#3b82f6", // Blue
     },
     {
       icon: <FaHandsHelping />,
       title: "Take Action",
-      description: "We implement sustainable solutions with local partners, ensuring long-term positive change."
+      description: "We implement sustainable solutions with local partners, ensuring long-term positive change.",
+      color: "#ef4444", // Red
     },
     {
       icon: <FaChartLine />,
       title: "Measure Impact",
-      description: "We track results and share transparent reports with our donors about every dollar spent."
-    }
+      description: "We track results and share transparent reports with our donors about every dollar spent.",
+      color: "#22c55e", // Green
+    },
   ];
 
   const styles = {
     section: {
-      backgroundColor: '#fff',
-      padding: '60px 20px',
-      textAlign: 'center',
-      fontFamily: 'sans-serif',
+      backgroundColor: "#fff",
+      padding: "60px 20px",
+      textAlign: "center",
+      fontFamily: "sans-serif",
     },
     subheading: {
-      color: '#22c55e', // Green color
-      fontWeight: 'bold',
-      fontSize: '14px',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
-      marginBottom: '10px',
+      color: "#22c55e",
+      fontWeight: "bold",
+      fontSize: "14px",
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      marginBottom: "10px",
     },
     heading: {
-      fontSize: '36px',
-      color: '#1a202c',
-      marginBottom: '50px',
-      fontWeight: 'bold',
+      fontSize: "36px",
+      color: "#1a202c",
+      marginBottom: "50px",
+      fontWeight: "bold",
     },
     stepsContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      gap: '40px',
-      maxWidth: '1200px',
-      margin: '0 auto',
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      gap: "40px",
+      maxWidth: "1200px",
+      margin: "0 auto",
     },
     stepCard: {
-      flex: '1 1 300px',
-      maxWidth: '350px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+      flex: "1 1 300px",
+      maxWidth: "350px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
-    iconBox: {
-      backgroundColor: '#22c55e', // Green color
-      color: '#fff',
-      width: '70px',
-      height: '70px',
-      borderRadius: '50%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      fontSize: '32px',
-      marginBottom: '20px',
+    // Common styles for the icon box
+    iconBoxBase: {
+      color: "#fff",
+      width: "70px",
+      height: "70px",
+      borderRadius: "50%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: "32px",
+      marginBottom: "20px",
+      // Remove fixed backgroundColor here, it will be added dynamically
     },
     stepTitle: {
-      fontSize: '20px',
-      fontWeight: 'bold',
-      color: '#1a202c',
-      marginBottom: '15px',
+      fontSize: "20px",
+      fontWeight: "bold",
+      color: "#1a202c",
+      marginBottom: "15px",
     },
     stepDescription: {
-      color: '#4a5568',
-      lineHeight: '1.6',
-    }
+      color: "#4a5568",
+      lineHeight: "1.6",
+    },
   };
 
   return (
@@ -87,7 +91,13 @@ const OurProcessSection = () => {
       <div style={styles.stepsContainer}>
         {steps.map((step, index) => (
           <div key={index} style={styles.stepCard}>
-            <div style={styles.iconBox}>
+            {/* Dynamic style applied here */}
+            <div 
+              style={{
+                ...styles.iconBoxBase, 
+                backgroundColor: step.color // Use the specific color
+              }}
+            >
               {step.icon}
             </div>
             <h3 style={styles.stepTitle}>{step.title}</h3>
