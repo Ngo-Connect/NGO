@@ -1,0 +1,14 @@
+package com.example.demo.services;
+
+import java.util.List;
+
+import com.example.demo.entity.BeneficiaryReq;
+import com.example.demo.repository.BeneficiaryRepo;
+
+public class BeneficiaryService {
+	BeneficiaryRepo brepo;
+	
+	public List <BeneficiaryReq> getAllRequest(){
+		return brepo.findAll();
+	}
+}
