@@ -1,6 +1,13 @@
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 
+// --- IMPORT YOUR IMAGES HERE ---
+// NOTE: Make sure the filenames (and extensions like .png, .jpg) match exactly what is in your assets folder
+import janhaviImg from '../assets/Janhavi_Photo.png'; 
+import neelamImg from '../assets/Neelam_Photo.png';
+import satyaImg from '../assets/Satyavrat_Photo.png';
+import yashImg from '../assets/Yash_Photo.png';
+
 const Contact = () => {
   // Mock Data for Group Members
   const teamMembers = [
@@ -11,7 +18,7 @@ const Contact = () => {
       email: "member1@cdac.in",
       github: "https://github.com/",
       linkedin: "https://linkedin.com/",
-      img: "https://via.placeholder.com/150" // Dummy Image
+      img: janhaviImg // Use the imported variable here
     },
     {
       id: 2,
@@ -20,7 +27,7 @@ const Contact = () => {
       email: "member2@cdac.in",
       github: "https://github.com/",
       linkedin: "https://linkedin.com/",
-      img: "https://via.placeholder.com/150"
+      img: neelamImg // Use the imported variable here
     },
     {
       id: 3,
@@ -29,7 +36,7 @@ const Contact = () => {
       email: "member3@cdac.in",
       github: "https://github.com/",
       linkedin: "https://linkedin.com/",
-      img: "https://via.placeholder.com/150"
+      img: satyaImg // Use the imported variable here
     },
     {
       id: 4,
@@ -38,7 +45,7 @@ const Contact = () => {
       email: "yashsinhe17@gmail.com",
       github: "https://github.com/",
       linkedin: "https://linkedin.com/",
-      img: "https://via.placeholder.com/150"
+      img: yashImg // Use the imported variable here
     },
   ];
 

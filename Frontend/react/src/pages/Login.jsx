@@ -8,26 +8,34 @@ const Login = () => {
   // --- State for Logic ---
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false); // <--- NEW STATE
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   // --- State for Responsive Design ---
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  // --- 1. Load "Remember Me" Data on Mount ---
   useEffect(() => {
+    // Check if an email was saved previously
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+
+    // Responsive listener
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // --- Logic (Unchanged) ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      // Using your configured port: 5096
       const response = await fetch("http://localhost:5096/api/Auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,7 +45,14 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Login failed Invalid Username/Password");
+        throw new Error(data.message || "Login failed");
+      }
+
+      // --- 2. Handle "Remember Me" Logic on Success ---
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
       }
 
       localStorage.setItem("user", JSON.stringify(data));
@@ -56,7 +71,7 @@ const Login = () => {
           navigate("/beneficiary-dashboard");
           break;
         default:
-          navigate("/"); 
+          navigate("/");
       }
     } catch (err) {
       setError(err.message);
@@ -65,17 +80,16 @@ const Login = () => {
     }
   };
 
-  // --- Styles ---
+  // --- Styles (Unchanged) ---
   const styles = {
     container: {
       display: "flex",
-      height: "100vh",
+      height: "100%", 
       width: "100%",
       flexDirection: isMobile ? "column" : "row",
       fontFamily: "'Segoe UI', sans-serif",
       overflow: "hidden", 
     },
-    // --- LEFT PANEL (Unchanged) ---
     leftPanel: {
       flex: 1,
       backgroundImage: `linear-gradient(rgba(16, 185, 129, 0.85), rgba(6, 95, 70, 0.9)), url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80')`,
@@ -89,7 +103,7 @@ const Login = () => {
     },
     leftContent: {
       maxWidth: "500px",
-      margin: "0 auto", // Center content horizontally in left panel
+      margin: "0 auto", 
     },
     welcomeTitle: {
       fontSize: "3rem",
@@ -117,28 +131,21 @@ const Login = () => {
       marginRight: "15px",
       fontSize: "14px",
     },
-
-    // --- RIGHT PANEL (Layout Container) ---
     rightPanel: {
       flex: 1,
-      position: "relative", // Needed for absolute positioning of Back Link
+      position: "relative",
       display: "flex",
-      justifyContent: "center", // Horizontally center the child div
-      alignItems: "center",     // Vertically center the child div
+      justifyContent: "center",
+      alignItems: "center",    
       backgroundColor: "#fff",
       padding: "20px",
     },
-    
-    // --- THE SEPARATE CENTERED DIV FOR FORM ---
     centerDiv: {
       width: "100%",
-      maxWidth: "420px", // Limits width to keep it looking like a card/form
+      maxWidth: "420px",
       display: "flex",
       flexDirection: "column",
-      // Optional: Add padding or shadow if you want it to look like a 'card' inside the white space
-      // padding: "20px", 
     },
-
     backLink: {
       position: "absolute",
       top: "30px",
@@ -158,7 +165,7 @@ const Login = () => {
       fontWeight: "bold",
       color: "#111827",
       marginBottom: "10px",
-      textAlign: "left", // Keeping alignment clean
+      textAlign: "left",
     },
     headerSub: {
       color: "#6b7280",
@@ -271,12 +278,10 @@ const Login = () => {
       {/* --- RIGHT PANEL --- */}
       <div style={styles.rightPanel}>
         
-        {/* Absolute Link (Outside the centerDiv) */}
         <Link to="/" style={styles.backLink}>
           <FaArrowLeft /> Back to Home
         </Link>
 
-        {/* --- THE SEPARATE CENTER DIV --- */}
         <div style={styles.centerDiv}>
           <h2 style={styles.headerTitle}>Sign In</h2>
           <p style={styles.headerSub}>Enter your credentials to access your account</p>
@@ -288,7 +293,7 @@ const Login = () => {
               <label style={styles.label}>Email Address</label>
               <input
                 type="email"
-                placeholder="name@example.com"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={styles.input}
@@ -308,7 +313,7 @@ const Login = () => {
               <label style={styles.label}>Password</label>
               <input
                 type="password"
-                placeholder="••••••••"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={styles.input}
@@ -326,10 +331,16 @@ const Login = () => {
 
             <div style={styles.optionsRow}>
               <label style={styles.checkboxContainer}>
-                <input type="checkbox" style={styles.checkbox} />
+                {/* --- 3. Connect Checkbox to State --- */}
+                <input 
+                  type="checkbox" 
+                  style={styles.checkbox} 
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
                 Remember me
               </label>
-              <Link to="#" style={styles.forgotLink}>Forgot password?</Link>
+              <Link to="/forgot-password" style={styles.forgotLink}>Forgot password?</Link>
             </div>
 
             <button

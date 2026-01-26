@@ -13,6 +13,8 @@ import NgoDashboard from './pages/NgoDashboard';
 import DonorDashboard from './pages/DonorDashboard';
 import BeneficiaryDashboard from './pages/BeneficiaryDashboard';
 import RegisterSuccessfully from './pages/RegisterSuccessfully';
+import Campaigns from './pages/Campaign'; // Updated to Plural to match component name
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -26,20 +28,24 @@ function App() {
           display: 'flex', 
           flexDirection: 'column', 
           height: '100vh',  // Force full screen height
-          overflow: 'hidden' // Prevent double scrollbars
+          overflow: 'hidden' // Prevent double scrollbars on the outer frame
         }}>
           
           {/* Navbar takes its natural height automatically */}
           <Navbar /> 
           
           {/* Main Content fills the EXACT remaining space */}
-          <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+          {/* CRITICAL FIX: overflowY: 'auto' allows scrolling inside this area */}
+          <div style={{ flex: 1, position: 'relative', overflowY: 'auto', overflowX: 'hidden' }}>
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/contact" element={<Contact />} />
+              
+              {/* This path must match the Link in Navbar ("/campaigns") */}
+              <Route path="/campaigns" element={<Campaigns />} />
 
               {/* Protected Dashboard Routes */}
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
@@ -47,6 +53,7 @@ function App() {
               <Route path="/donor-dashboard" element={<DonorDashboard />} />
               <Route path="/beneficiary-dashboard" element={<BeneficiaryDashboard />} />
               <Route path="/register-success" element={<RegisterSuccessfully />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
             </Routes>
           </div>
           
