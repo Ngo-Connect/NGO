@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUsers, FaHeart, FaChartLine, FaAward } from "react-icons/fa";
+import FetchRequest from "./ViewRequests";
 
 // --- CSS CONSTANT OBJECT ---
 const styles = {
@@ -78,6 +79,8 @@ const styles = {
 
 const NgoDashboard = () => {
   const navigate = useNavigate();
+  const userData = localStorage.getItem("user");
+  const userDetail = JSON.parse(userData)
 
   const handleLogout = () => {
     localStorage.clear();
@@ -86,24 +89,25 @@ const NgoDashboard = () => {
 
   return (
     <div style={styles.dashboardWrapper}>
-      {/* Header */}
+      
       <div style={styles.header}>
         <div>
           <h1 style={styles.title}>NGO Dashboard</h1>
-          <p style={styles.subtitle}>Helping Hands Foundation - Welcome, NGO Admin</p>
+          <p style={styles.subtitle}>Helping Hands Foundation - Welcome, <strong>{userDetail.username}</strong></p>
         </div>
         <button style={styles.logoutBtn} onClick={handleLogout}>Logout</button>
       </div>
 
-      {/* Stats Cards */}
+      
       <div style={styles.statsGrid}>
         <div style={styles.statCard}>
           <p style={styles.subtitle}>Active Campaigns</p>
           <h2 style={{ fontSize: "28px", margin: "8px 0" }}>12</h2>
+          <button type="button" class="btn btn-primary" onClick={()  =>navigate("/view-requests")}>View Active Events</button>
           <FaAward style={{ ...styles.iconBase, color: "#2563eb", background: "#dbeafe" }} />
         </div>
         <div style={styles.statCard}>
-          <p style={styles.subtitle}>Total Beneficiaries</p>
+          <p style={styles.subtitle}>Total beneficiaries helped</p>
           <h2 style={{ fontSize: "28px", margin: "8px 0" }}>456</h2>
           <FaUsers style={{ ...styles.iconBase, color: "#16a34a", background: "#dcfce7" }} />
         </div>
@@ -163,6 +167,7 @@ const NgoDashboard = () => {
           <div style={styles.metricRow}><span>Checkups</span><strong>89</strong></div>
         </div>
       </div>
+      
 
       {/* Recent Donations */}
       <div style={styles.card}>

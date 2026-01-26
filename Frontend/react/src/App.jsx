@@ -19,6 +19,7 @@ import ForgotPassword from './pages/ForgotPassword';
 
 // --- NEW IMPORT: THE SECURITY GUARD ---
 import ProtectedRoute from './components/ProtectedRoute';
+import FetchRequest from './pages/ViewRequests';
 
 // --- TITLE UPDATER COMPONENT ---
 const PageTitleUpdater = () => {
@@ -38,6 +39,7 @@ const PageTitleUpdater = () => {
       "/ngo-dashboard": "NGO Dashboard",
       "/donor-dashboard": "Donor Portal",
       "/beneficiary-dashboard": "Impact Portal",
+      "/view-requests":"View active requests",
     };
 
     const currentTitle = routeTitles[location.pathname] || "Connect";
@@ -104,6 +106,14 @@ function App() {
                     <DonorDashboard />
                   </ProtectedRoute>
                 } 
+              />
+              <Route // For ngo as well as donor to be able to view active request
+                path="/view-requests"
+                element={
+                  <ProtectedRoute allowedRoles={['NGO', 'Donor']}>
+                    <FetchRequest />
+                  </ProtectedRoute>
+                }
               />
 
               <Route 
