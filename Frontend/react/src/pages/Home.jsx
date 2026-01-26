@@ -116,7 +116,7 @@ const Home = () => {
          ========================================= */}
       <div style={{ position: "relative", height: "100%", width: "100%" }}>
         
-        {/* 1. BACKGROUND VIDEO */}
+        {/*1. BACKGROUND VIDEO*/}
         <video
           autoPlay
           loop

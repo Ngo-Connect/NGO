@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -8,26 +9,17 @@ const Login = () => {
   // --- State for Logic ---
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false); // <--- NEW STATE
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // --- State for Responsive Design ---
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  // --- 1. Load "Remember Me" Data on Mount ---
+  // Load "Remember Me" email on startup
   useEffect(() => {
-    // Check if an email was saved previously
     const savedEmail = localStorage.getItem("rememberedEmail");
     if (savedEmail) {
       setEmail(savedEmail);
       setRememberMe(true);
     }
-
-    // Responsive listener
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -48,30 +40,24 @@ const Login = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      // --- 2. Handle "Remember Me" Logic on Success ---
+      // 1. Handle "Remember Me"
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
       } else {
         localStorage.removeItem("rememberedEmail");
       }
 
+      // 2. STORE JWT TOKEN & USER DATA
+      localStorage.setItem("token", data.token); 
       localStorage.setItem("user", JSON.stringify(data));
 
+      // 3. Redirect based on Role
       switch (data.role) {
-        case "Admin":
-          navigate("/admin-dashboard");
-          break;
-        case "NGO":
-          navigate("/ngo-dashboard");
-          break;
-        case "Donor":
-          navigate("/donor-dashboard");
-          break;
-        case "Beneficiary":
-          navigate("/beneficiary-dashboard");
-          break;
-        default:
-          navigate("/");
+        case "Admin": navigate("/admin-dashboard"); break;
+        case "NGO": navigate("/ngo-dashboard"); break;
+        case "Donor": navigate("/donor-dashboard"); break;
+        case "Beneficiary": navigate("/beneficiary-dashboard"); break;
+        default: navigate("/");
       }
     } catch (err) {
       setError(err.message);
@@ -80,287 +66,142 @@ const Login = () => {
     }
   };
 
-  // --- Styles (Unchanged) ---
-  const styles = {
-    container: {
-      display: "flex",
-      height: "100%", 
-      width: "100%",
-      flexDirection: isMobile ? "column" : "row",
-      fontFamily: "'Segoe UI', sans-serif",
-      overflow: "hidden", 
-    },
-    leftPanel: {
-      flex: 1,
-      backgroundImage: `linear-gradient(rgba(16, 185, 129, 0.85), rgba(6, 95, 70, 0.9)), url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80')`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      color: "white",
-      display: isMobile ? "none" : "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      padding: "60px",
-    },
-    leftContent: {
-      maxWidth: "500px",
-      margin: "0 auto", 
-    },
-    welcomeTitle: {
-      fontSize: "3rem",
-      fontWeight: "bold",
-      marginBottom: "20px",
-      lineHeight: "1.2",
-    },
-    welcomeSub: {
-      fontSize: "1.1rem",
-      marginBottom: "40px",
-      opacity: "0.9",
-      lineHeight: "1.6",
-    },
-    benefitItem: {
-      display: "flex",
-      alignItems: "center",
-      marginBottom: "20px",
-      fontSize: "1.1rem",
-      fontWeight: "500",
-    },
-    checkIcon: {
-      backgroundColor: "rgba(255,255,255,0.2)",
-      borderRadius: "50%",
-      padding: "5px",
-      marginRight: "15px",
-      fontSize: "14px",
-    },
-    rightPanel: {
-      flex: 1,
-      position: "relative",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",    
-      backgroundColor: "#fff",
-      padding: "20px",
-    },
-    centerDiv: {
-      width: "100%",
-      maxWidth: "420px",
-      display: "flex",
-      flexDirection: "column",
-    },
-    backLink: {
-      position: "absolute",
-      top: "30px",
-      left: "30px",
-      textDecoration: "none",
-      color: "#10b981",
-      fontWeight: "600",
-      display: "flex",
-      alignItems: "center",
-      gap: "8px",
-      fontSize: "0.95rem",
-      cursor: "pointer",
-      zIndex: 10,
-    },
-    headerTitle: {
-      fontSize: "2.2rem",
-      fontWeight: "bold",
-      color: "#111827",
-      marginBottom: "10px",
-      textAlign: "left",
-    },
-    headerSub: {
-      color: "#6b7280",
-      marginBottom: "30px",
-      fontSize: "1rem",
-      textAlign: "left",
-    },
-    inputGroup: {
-      marginBottom: "20px",
-    },
-    label: {
-      display: "block",
-      marginBottom: "8px",
-      fontSize: "0.9rem",
-      fontWeight: "600",
-      color: "#374151",
-    },
-    input: {
-      width: "100%",
-      padding: "14px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      backgroundColor: "#f9fafb",
-      fontSize: "1rem",
-      outline: "none",
-      transition: "border-color 0.2s, background-color 0.2s",
-      boxSizing: "border-box",
-    },
-    optionsRow: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "30px",
-      fontSize: "0.9rem",
-    },
-    checkboxContainer: {
-      display: "flex",
-      alignItems: "center",
-      color: "#4b5563",
-    },
-    checkbox: {
-      marginRight: "8px",
-      width: "16px",
-      height: "16px",
-      cursor: "pointer",
-      accentColor: "#10b981",
-    },
-    forgotLink: {
-      color: "#10b981",
-      textDecoration: "none",
-      fontWeight: "600",
-    },
-    submitBtn: {
-      width: "100%",
-      padding: "16px",
-      backgroundColor: "#10b981",
-      color: "white",
-      border: "none",
-      borderRadius: "30px",
-      fontSize: "1.1rem",
-      fontWeight: "bold",
-      cursor: "pointer",
-      transition: "background-color 0.3s",
-    },
-    errorMsg: {
-      backgroundColor: "#fee2e2",
-      color: "#ef4444",
-      padding: "12px",
-      borderRadius: "8px",
-      marginBottom: "20px",
-      textAlign: "center",
-      fontSize: "0.9rem",
-    },
-    signupText: {
-      textAlign: "center",
-      marginTop: "25px",
-      color: "#6b7280",
-    },
-    signupLink: {
-      color: "#10b981",
-      fontWeight: "bold",
-      textDecoration: "none",
-      marginLeft: "5px",
-    },
-  };
-
   return (
-    <div style={styles.container}>
+    // FIXED LAYOUT: position: fixed + overflow: hidden ensures NO SCROLLBARS ever.
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', overflow: 'hidden', margin: 0, padding: 0, backgroundColor: '#fff' }}>
       
-      {/* --- LEFT PANEL --- */}
-      <div style={styles.leftPanel}>
-        <div style={styles.leftContent}>
-          <h1 style={styles.welcomeTitle}>Welcome Back to<br />NGO-Connect</h1>
-          <p style={styles.welcomeSub}>
-            Continue your journey of making a positive impact in communities worldwide.
-          </p>
-          
-          <div style={styles.benefitItem}>
-            <FaCheck style={styles.checkIcon} /> Track your donations
-          </div>
-          <div style={styles.benefitItem}>
-            <FaCheck style={styles.checkIcon} /> Support multiple campaigns
-          </div>
-          <div style={styles.benefitItem}>
-            <FaCheck style={styles.checkIcon} /> See your impact in real-time
-          </div>
-        </div>
-      </div>
-
-      {/* --- RIGHT PANEL --- */}
-      <div style={styles.rightPanel}>
+      <div className="row g-0 h-100">
         
-        <Link to="/" style={styles.backLink}>
-          <FaArrowLeft /> Back to Home
-        </Link>
+        {/* --- LEFT PANEL --- */}
+        <div 
+          className="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center text-white p-5"
+          style={{
+            backgroundImage: `linear-gradient(rgba(16, 185, 129, 0.85), rgba(6, 95, 70, 0.9)), url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div style={{ maxWidth: "450px" }}>
+            <h1 className="display-4 fw-bold mb-2">Welcome Back</h1>
+            <h2 className="h2 mb-4">to NGO-Connect</h2>
+            <p className="lead mb-4 opacity-75 fs-6">Continue your journey of making a positive impact in communities worldwide.</p>
+            
+            <div className="d-flex flex-column gap-3">
+              <div className="d-flex align-items-center fs-6">
+                <span className="bg-white bg-opacity-25 rounded-circle p-1 me-3 d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
+                   <FaCheck size={12} />
+                </span>
+                Track your donations
+              </div>
+              <div className="d-flex align-items-center fs-6">
+                <span className="bg-white bg-opacity-25 rounded-circle p-1 me-3 d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
+                   <FaCheck size={12} />
+                </span>
+                Support multiple campaigns
+              </div>
+              <div className="d-flex align-items-center fs-6">
+                <span className="bg-white bg-opacity-25 rounded-circle p-1 me-3 d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
+                   <FaCheck size={12} />
+                </span>
+                See your impact in real-time
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div style={styles.centerDiv}>
-          <h2 style={styles.headerTitle}>Sign In</h2>
-          <p style={styles.headerSub}>Enter your credentials to access your account</p>
+        {/* --- RIGHT PANEL --- */}
+        <div className="col-md-6 d-flex align-items-center justify-content-center position-relative h-100 bg-white">
+          
+          <Link 
+            to="/" 
+            className="text-decoration-none position-absolute top-0 start-0 m-4 fw-bold d-flex align-items-center gap-2" 
+            style={{ color: '#10b981', zIndex: 10 }}
+          >
+            <FaArrowLeft /> Back
+          </Link>
 
-          {error && <div style={styles.errorMsg}>{error}</div>}
-
-          <form onSubmit={handleSubmit}>
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>Email Address</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={styles.input}
-                onFocus={(e) => {
-                  e.target.style.borderColor = "#10b981";
-                  e.target.style.backgroundColor = "#fff";
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = "#d1d5db";
-                  e.target.style.backgroundColor = "#f9fafb";
-                }}
-                required
-              />
+          <div className="w-100 px-4" style={{ maxWidth: "400px" }}>
+            <div className="mb-4">
+              <h2 className="fw-bold text-dark h3">Sign In</h2>
+              <p className="text-muted small">Enter your credentials to access your account</p>
             </div>
 
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={styles.input}
-                onFocus={(e) => {
-                  e.target.style.borderColor = "#10b981";
-                  e.target.style.backgroundColor = "#fff";
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = "#d1d5db";
-                  e.target.style.backgroundColor = "#f9fafb";
-                }}
-                required
-              />
-            </div>
+            {error && (
+              <div className="alert alert-danger py-2 small d-flex align-items-center" role="alert">
+                {error}
+              </div>
+            )}
 
-            <div style={styles.optionsRow}>
-              <label style={styles.checkboxContainer}>
-                {/* --- 3. Connect Checkbox to State --- */}
-                <input 
-                  type="checkbox" 
-                  style={styles.checkbox} 
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label fw-bold small text-secondary mb-1">Email Address</label>
+                <input
+                  type="email"
+                  className="form-control bg-light border-0"
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{ fontSize: '0.95rem', padding: '10px' }}
                 />
-                Remember me
-              </label>
-              <Link to="/forgot-password" style={styles.forgotLink}>Forgot password?</Link>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label fw-bold small text-secondary mb-1">Password</label>
+                <input
+                  type="password"
+                  className="form-control bg-light border-0"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  style={{ fontSize: '0.95rem', padding: '10px' }}
+                />
+              </div>
+
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input shadow-none"
+                    id="rememberMe"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    style={{ cursor: 'pointer', borderColor: '#10b981' }} 
+                  />
+                  <label className="form-check-label small text-muted" htmlFor="rememberMe" style={{ cursor: 'pointer' }}>
+                    Remember me
+                  </label>
+                </div>
+                <Link to="/forgot-password" className="small text-decoration-none fw-bold" style={{ color: '#10b981' }}>
+                  Forgot password?
+                </Link>
+              </div>
+
+              <button
+                type="submit"
+                className="btn w-100 text-white fw-bold shadow-sm"
+                disabled={isLoading}
+                style={{ 
+                  backgroundColor: '#10b981', 
+                  borderRadius: '25px',
+                  padding: '10px 0',
+                  fontSize: '1rem'
+                }}
+              >
+                {isLoading ? "Loading..." : "Login"}
+              </button>
+            </form>
+
+            <div className="text-center mt-4 text-muted small">
+              Don't have an account? 
+              <Link to="/register" className="ms-1 text-decoration-none fw-bold" style={{ color: '#10b981' }}>
+                Sign up
+              </Link>
             </div>
-
-            <button
-              type="submit"
-              style={styles.submitBtn}
-              disabled={isLoading}
-              onMouseEnter={(e) => !isLoading && (e.target.style.backgroundColor = "#059669")}
-              onMouseLeave={(e) => !isLoading && (e.target.style.backgroundColor = "#10b981")}
-            >
-              {isLoading ? "Logging in..." : "Login"}
-            </button>
-          </form>
-
-          <p style={styles.signupText}>
-            Don't have an account? 
-            <Link to="/register" style={styles.signupLink}>Sign up</Link>
-          </p>
+          </div>
         </div>
       </div>
-
     </div>
   );
 };
