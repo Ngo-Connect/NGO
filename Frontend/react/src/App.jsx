@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext'; 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -13,29 +14,59 @@ import NgoDashboard from './pages/NgoDashboard';
 import DonorDashboard from './pages/DonorDashboard';
 import BeneficiaryDashboard from './pages/BeneficiaryDashboard';
 import RegisterSuccessfully from './pages/RegisterSuccessfully';
-import Campaigns from './pages/Campaign'; // Updated to Plural to match component name
+import Campaigns from './pages/Campaign'; 
 import ForgotPassword from './pages/ForgotPassword';
+
+// --- NEW IMPORT: THE SECURITY GUARD ---
+import ProtectedRoute from './components/ProtectedRoute';
+
+// --- TITLE UPDATER COMPONENT ---
+const PageTitleUpdater = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Map your paths to specific titles
+    const routeTitles = {
+      "/": "Home",
+      "/login": "Login",
+      "/register": "Join Us",
+      "/contact": "Contact Us",
+      "/campaigns": "Active Campaigns",
+      "/register-success": "Welcome!",
+      "/forgot-password": "Reset Password",
+      "/admin-dashboard": "Admin Panel",
+      "/ngo-dashboard": "NGO Dashboard",
+      "/donor-dashboard": "Donor Portal",
+      "/beneficiary-dashboard": "Impact Portal",
+    };
+
+    const currentTitle = routeTitles[location.pathname] || "Connect";
+    document.title = `NGO-Connect | ${currentTitle}`;
+  }, [location]);
+
+  return null; // This component doesn't render anything visually
+};
 
 function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
-      {/* The Mask Cursor sits on top */}
+        {/* Syncs the <title> tag with the current route */}
+        <PageTitleUpdater />
+
+        {/* The Mask Cursor sits on top */}
         <CursorMask />
 
         {/* --- LAYOUT FIX STARTS HERE --- */}
         <div style={{ 
           display: 'flex', 
           flexDirection: 'column', 
-          height: '100vh',  // Force full screen height
-          overflow: 'hidden' // Prevent double scrollbars on the outer frame
+          height: '100vh',  
+          overflow: 'hidden' 
         }}>
           
-          {/* Navbar takes its natural height automatically */}
           <Navbar /> 
           
-          {/* Main Content fills the EXACT remaining space */}
-          {/* CRITICAL FIX: overflowY: 'auto' allows scrolling inside this area */}
           <div style={{ flex: 1, position: 'relative', overflowY: 'auto', overflowX: 'hidden' }}>
             <Routes>
               {/* Public Routes */}
@@ -43,22 +74,49 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/contact" element={<Contact />} />
-              
-              {/* This path must match the Link in Navbar ("/campaigns") */}
               <Route path="/campaigns" element={<Campaigns />} />
-
-              {/* Protected Dashboard Routes */}
-              <Route path="/admin-dashboard" element={<AdminDashboard />} />
-              <Route path="/ngo-dashboard" element={<NgoDashboard />} />
-              <Route path="/donor-dashboard" element={<DonorDashboard />} />
-              <Route path="/beneficiary-dashboard" element={<BeneficiaryDashboard />} />
               <Route path="/register-success" element={<RegisterSuccessfully />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
+
+              {/* Protected Routes */}
+              <Route 
+                path="/admin-dashboard" 
+                element={
+                  <ProtectedRoute allowedRoles={['Admin']}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+
+              <Route 
+                path="/ngo-dashboard" 
+                element={
+                  <ProtectedRoute allowedRoles={['NGO']}>
+                    <NgoDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+
+              <Route 
+                path="/donor-dashboard" 
+                element={
+                  <ProtectedRoute allowedRoles={['Donor']}>
+                    <DonorDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+
+              <Route 
+                path="/beneficiary-dashboard" 
+                element={
+                  <ProtectedRoute allowedRoles={['Beneficiary']}>
+                    <BeneficiaryDashboard />
+                  </ProtectedRoute>
+                } 
+              />
             </Routes>
           </div>
-          
         </div>
-       
       </BrowserRouter>
     </ThemeProvider>
   );
