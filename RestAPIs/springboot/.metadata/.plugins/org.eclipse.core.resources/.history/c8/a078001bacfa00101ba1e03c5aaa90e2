@@ -1,7 +1,0 @@
-package com.example.demo.services;
-
-import com.example.demo.repository.BeneficiaryRepo;
-
-public class BeneficiaryService {
-	private BeneficiaryRepo brepo;
-}
