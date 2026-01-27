@@ -1,0 +1,23 @@
+package com.example.demo.controllers;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.entity.BeneficiaryReq;
+import com.example.demo.services.BeneficiaryService;
+
+@Controller
+public class BeneficiaryController {
+	BeneficiaryService bs;
+	@GetMapping
+	public List <BeneficiaryReq> getAll(){
+		return bs.getAllRequest();
+	}
+	@GetMapping
+	public List <BeneficiaryReq> getBeneficiaryCount(@RequestParam int benf_id){
+		
+	}
+}
