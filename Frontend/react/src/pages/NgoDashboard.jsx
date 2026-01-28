@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUsers, FaHeart, FaChartLine, FaAward } from "react-icons/fa";
 import FetchRequest from "./ViewRequests";
@@ -82,6 +82,14 @@ const NgoDashboard = () => {
   const userData = localStorage.getItem("user");
   const userDetail = JSON.parse(userData)
 
+  const [activeRequest, setRequest] = useState([]);
+  useEffect(()=>{
+    fetch("http://localhost:8080/getActive")
+      .then(res =>res.json())
+      .then(data =>setRequest(data))
+      .catch(err=>console.log("No requests found"))
+  },[])
+
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
@@ -102,8 +110,8 @@ const NgoDashboard = () => {
       <div style={styles.statsGrid}>
         <div style={styles.statCard}>
           <p style={styles.subtitle}>Active Campaigns</p>
-          <h2 style={{ fontSize: "28px", margin: "8px 0" }}>12</h2>
-          <button type="button" class="btn btn-primary" onClick={()  =>navigate("/view-requests")}>View Active Events</button>
+          <h2 style={{ fontSize: "28px", margin: "8px 0" }}>{activeRequest}</h2>
+          <button type="button" class="btn btn-primary" onClick={()  =>navigate("/view-requests")}>View Request's</button>
           <FaAward style={{ ...styles.iconBase, color: "#2563eb", background: "#dbeafe" }} />
         </div>
         <div style={styles.statCard}>
