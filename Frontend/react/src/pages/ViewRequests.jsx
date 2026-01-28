@@ -19,7 +19,7 @@ export default function FetchRequest(){
     return(
         <div className="container mt-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Active Beneficiary Requests</h2>
+                <h2>Beneficiary Requests</h2>
                 <button className="btn btn-secondary" onClick={() => navigate(-1)}>
                     Back to Dashboard
                 </button>
@@ -39,9 +39,9 @@ export default function FetchRequest(){
                     </thead>
                     <tbody>
                         {requests.length > 0 ? (
-                            requests.map((req) => (
+                            requests.map((req, index) => (
                                 <tr key={req.request_id}>
-                                    <td>{req.request_id}</td>
+                                    <td>{index+1}</td>
                                     <td>{req.description}</td>
                                     <td>
                             
