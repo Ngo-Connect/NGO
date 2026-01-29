@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="installedFeatures">
+		<item value="org.eclipse.datatools.common.doc.user:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.connectivity.doc.user:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.connectivity.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.connectivity.oda.designer.core.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.connectivity.oda.designer.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.connectivity.oda.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.doc.user:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.apache.derby.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.hsqldb.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.ibm.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.ingres.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.jdbc.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.jdt.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.msft.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.mysql.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.oda.designer.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.oda.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.oracle.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.postgresql.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.sap.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.sdk.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.sqlite.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.enablement.sybase.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.modelbase.feature:1.15.1.202412071309"/>
+		<item value="org.eclipse.datatools.sdk.feature:1.16.3.202412071309"/>
+		<item value="org.eclipse.datatools.sqldevtools.ddlgen.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.sqldevtools.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.sqldevtools.parsers.feature:1.16.1.202412071309"/>
+		<item value="org.eclipse.datatools.sqltools.doc.user:1.15.1.202412071309"/>
+		<item value="org.eclipse.draw2d:3.25.0.202508011427"/>
+		<item value="org.eclipse.egit:7.4.0.202509020913-r"/>
+		<item value="org.eclipse.emf.codegen.ecore.ui:2.43.0.v20250611-1559"/>
+		<item value="org.eclipse.emf.codegen.ecore:2.43.0.v20250810-1438"/>
+		<item value="org.eclipse.emf.codegen.ui:2.27.0.v20240911-1027"/>
+		<item value="org.eclipse.emf.codegen:2.28.0.v20250825-1255"/>
+		<item value="org.eclipse.emf.common.ui:2.24.0.v20250329-0911"/>
+		<item value="org.eclipse.emf.common:2.36.0.v20250629-1403"/>
+		<item value="org.eclipse.emf.converter:2.22.0.v20240911-1442"/>
+		<item value="org.eclipse.emf.databinding.edit:1.12.0.v20240604-0832"/>
+		<item value="org.eclipse.emf.databinding:1.12.0.v20240604-0832"/>
+		<item value="org.eclipse.emf.ecore.edit:2.17.0.v20240604-0832"/>
+		<item value="org.eclipse.emf.ecore.editor:2.20.0.v20240604-0832"/>
+		<item value="org.eclipse.emf.ecore:2.41.0.v20250803-1633"/>
+		<item value="org.eclipse.emf.edit.ui:2.28.0.v20250405-0811"/>
+		<item value="org.eclipse.emf.edit:2.24.0.v20250330-0741"/>
+		<item value="org.eclipse.emf.mapping.ecore.editor:2.17.0.v20240604-0832"/>
+		<item value="org.eclipse.emf.mapping.ecore:2.15.0.v20240604-0832"/>
+		<item value="org.eclipse.emf.mapping.ui:2.17.0.v20240911-1027"/>
+		<item value="org.eclipse.emf.mapping:2.16.0.v20240604-0832"/>
+		<item value="org.eclipse.emf:2.43.0.v20250825-1255"/>
+		<item value="org.eclipse.epp.mpc:1.13.0.v20250816-1241"/>
+		<item value="org.eclipse.gef:3.25.0.202508011427"/>
+		<item value="org.eclipse.help:2.3.2300.v20250905-0730"/>
+		<item value="org.eclipse.jdt:3.20.300.v20250905-1111"/>
+		<item value="org.eclipse.jgit.gpg.bc:7.4.0.202509020913-r"/>
+		<item value="org.eclipse.jgit.http.apache:7.4.0.202509020913-r"/>
+		<item value="org.eclipse.jgit.ssh.apache:7.4.0.202509020913-r"/>
+		<item value="org.eclipse.jgit:7.4.0.202509020913-r"/>
+		<item value="org.eclipse.jst.common.fproj.enablement.jdt:3.39.0.v202508180233"/>
+		<item value="org.eclipse.jst.enterprise_ui.feature:3.39.0.v202508301800"/>
+		<item value="org.eclipse.jst.ws.axis2tools.feature:1.2.0.v202405180419"/>
+		<item value="org.eclipse.jst.ws.cxf.feature:1.1.1300.v202409291603"/>
+		<item value="org.eclipse.jst.ws.jaxws.feature:1.2.1100.v202409291604"/>
+		<item value="org.eclipse.m2e.feature:2.9.1.20250811-2022"/>
+		<item value="org.eclipse.m2e.logback.feature:2.7.100.20250418-1315"/>
+		<item value="org.eclipse.m2e.pde.feature:2.3.500.20250727-0612"/>
+		<item value="org.eclipse.m2e.wtp.feature:1.6.1.20231024-1618"/>
+		<item value="org.eclipse.m2e.wtp.jaxrs.feature:1.6.1.20231024-1618"/>
+		<item value="org.eclipse.m2e.wtp.jpa.feature:1.6.1.20231024-1618"/>
+		<item value="org.eclipse.m2e.wtp.jsf.feature:1.6.1.20231024-1618"/>
+		<item value="org.eclipse.mylyn.builds.feature:4.8.0.v20250813-1217"/>
+		<item value="org.eclipse.mylyn.commons.feature:4.8.0.v20250813-0645"/>
+		<item value="org.eclipse.mylyn.commons.identity.feature:4.8.0.v20250809-1505"/>
+		<item value="org.eclipse.mylyn.commons.notifications.feature:4.8.0.v20250813-0648"/>
+		<item value="org.eclipse.mylyn.commons.repositories.feature:4.8.0.v20250826-1201"/>
+		<item value="org.eclipse.mylyn.context.feature:4.8.0.v20250816-0943"/>
+		<item value="org.eclipse.mylyn.egit.feature:4.8.0.v20250815-0537"/>
+		<item value="org.eclipse.mylyn.git.feature:4.8.0.v20250821-0543"/>
+		<item value="org.eclipse.mylyn.github.feature:6.9.0.v20250816-0848"/>
+		<item value="org.eclipse.mylyn.ide.feature:4.8.0.v20250816-0845"/>
+		<item value="org.eclipse.mylyn.jdt.feature:4.8.0.v20250816-0849"/>
+		<item value="org.eclipse.mylyn.jenkins.feature:4.8.0.v20250809-1546"/>
+		<item value="org.eclipse.mylyn.monitor.feature:4.8.0.v20250814-1811"/>
+		<item value="org.eclipse.mylyn.pde.feature:4.8.0.v20250816-0944"/>
+		<item value="org.eclipse.mylyn.reviews.feature:4.8.0.v20250820-0707"/>
+		<item value="org.eclipse.mylyn.tasks.feature:4.8.0.v20250821-0416"/>
+		<item value="org.eclipse.mylyn.team.feature:4.8.0.v20250815-0736"/>
+		<item value="org.eclipse.mylyn.versions.feature:4.8.0.v20250821-0548"/>
+		<item value="org.eclipse.mylyn.wikitext.feature:4.8.0.v20250823-0814"/>
+		<item value="org.eclipse.oomph.p2:1.34.0.v20251024-1029"/>
+		<item value="org.eclipse.oomph.setup.core:1.35.0.v20251008-0516"/>
+		<item value="org.eclipse.oomph.setup:1.37.0.v20251024-1029"/>
+		<item value="org.eclipse.platform:4.37.0.v20250905-0730"/>
+		<item value="org.eclipse.rcp:4.37.0.v20250905-0730"/>
+		<item value="org.eclipse.wst.common.fproj:3.39.0.v202508180233"/>
+		<item value="org.eclipse.wst.xml_ui.feature:3.39.0.v202508302230"/>
+		<item value="org.testng.eclipse:7.11.0.202503091801"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\yashs\OneDrive\Desktop\this is the project folder\fork\NGO-Yash\RestAPIs\springboot\springboot_ngo_backend\ngo_backend"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+		<section name="ExternalProjectImportWizard.dialogBounds">
+			<item key="DIALOG_X_ORIGIN" value="513"/>
+			<item key="DIALOG_Y_ORIGIN" value="103"/>
+			<item key="DIALOG_WIDTH" value="525"/>
+			<item key="DIALOG_HEIGHT" value="716"/>
+			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+		</section>
+	</section>
+</section>

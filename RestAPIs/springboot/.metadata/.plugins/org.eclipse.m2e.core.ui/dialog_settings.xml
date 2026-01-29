@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="C:\Users\yashs\OneDrive\Desktop\this is the project folder\fork\NGO-Yash\RestAPIs\springboot\ngo-connect-springboot"/>
+			<item value="C:\Users\yashs\OneDrive\Desktop\this is the project folder\cdac-project_BACKUP\springBackend_Project_WORKSPACE\springboot_admin_backend"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+</section>

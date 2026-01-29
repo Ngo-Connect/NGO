@@ -7,7 +7,7 @@ export default function FetchRequest(){
     const [requests,setRequest] = useState([]);
 
     useEffect(()=>{
-        fetch("http://localhost:8080/getAll")
+        fetch("http://localhost:8083/getAll")
         .then(resp => {if(resp.ok)
             return resp.json();
             else

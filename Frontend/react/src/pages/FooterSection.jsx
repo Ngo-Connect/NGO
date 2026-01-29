@@ -110,7 +110,6 @@ const FooterSection = () => {
           <div style={styles.logoBox}>
             Logo Here
             <br />
-            <span style={{fontSize: '12px', fontWeight: 'normal'}}>+2349162671360</span>
           </div>
           <p style={styles.description}>
             Empowering communities through sustainable development, education, and healthcare initiatives worldwide.

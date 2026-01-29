@@ -84,7 +84,7 @@ const NgoDashboard = () => {
 
   const [activeRequest, setRequest] = useState([]);
   useEffect(()=>{
-    fetch("http://localhost:8080/getActive")
+    fetch("http://localhost:8083/getActive")
       .then(res =>res.json())
       .then(data =>setRequest(data))
       .catch(err=>console.log("No requests found"))

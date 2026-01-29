@@ -1,0 +1,5 @@
+package com.cdac.admin_backend.config;
+
+public class CorsConfig {
+
+}

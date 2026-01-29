@@ -251,7 +251,7 @@ const Home = () => {
         {/* ------------------------------- */}
 
         <div className="d-none d-md-block" style={{ ...bottomTextStyle, right: '20px', textAlign: 'right' }}>
-          Made with <span style={{ color: '#ff4d4d', fontSize: '1.2em' }}>&hearts;</span> by Group-1 at Know-IT(Pune)
+          Made with <span style={{ color: '#ff4d4d', fontSize: '1.2em' }}>❤️</span> by Group-1 at Know-IT(Pune)
         </div>
       </div>
 

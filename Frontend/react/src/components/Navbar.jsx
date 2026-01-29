@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'; 
 import { FaHandHoldingHeart, FaSun, FaMoon, FaCloud, FaBars, FaTimes } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
+import NGOlogoImg from '../assets/NGO-CONNECT-Logo.png';
+import NGOImg from '../assets/Logo.png';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Navbar = () => {
@@ -57,14 +59,19 @@ const Navbar = () => {
       >
         <div className="container-fluid p-0">
           
-          {/* BRANDING */}
+          {/* BRANDING WITH PNG LOGO */}
           <Link 
             className="navbar-brand d-flex align-items-center" 
             to="/" 
             onClick={closeNav}
             style={styles.brand}
           >
-            <FaHandHoldingHeart style={{ marginRight: '8px', fontSize: '1.8rem' }} />
+            {/* Replaced Icon with Image */}
+            <img 
+              src={NGOImg} 
+              alt="NGO Connect Logo" 
+              style={{ height: '40px', marginRight: '10px', objectFit: 'contain' }} 
+            />
             <span>NGO-Connect</span>
           </Link>
 
