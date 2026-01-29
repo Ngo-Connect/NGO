@@ -110,7 +110,6 @@ const FooterSection = () => {
           <div style={styles.logoBox}>
             Logo Here
             <br />
-            <span style={{fontSize: '12px', fontWeight: 'normal'}}>+2349162671360</span>
           </div>
           <p style={styles.description}>
             Empowering communities through sustainable development, education, and healthcare initiatives worldwide.
@@ -139,11 +138,7 @@ const FooterSection = () => {
           <h4 style={styles.heading}>Contact Us</h4>
           <div style={styles.contactItem}>
             <FaMapMarkerAlt style={styles.contactIcon} />
-            <span>CDAC-ACTS Know-IT</span>
-          </div>
-          <div style={styles.contactItem}>
-            <FaPhoneAlt style={styles.contactIcon} />
-            <span>+2349162671360</span>
+            <span><a href='https://maps.app.goo.gl/FqC2oJ3V6Z9mi2JH7'>KNOW-IT, C-DAC ACTS (ATC), Pune</a></span>
           </div>
           <div style={styles.contactItem}>
             <FaPhoneAlt style={styles.contactIcon} />
