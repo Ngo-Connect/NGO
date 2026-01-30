@@ -51,13 +51,13 @@ const BeneficiaryDashboard = () => {
     formData.append("itemId", Number(form.itemId));
     formData.append("amountNeeded", form.amountNeeded);
     formData.append("description", form.description);
-    formData.append("proofDocument", proofFile);
+    formData.append("proof", proofFile);
 
     try {
       await axios.post(
         "http://localhost:8084/api/beneficiary/request",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        // { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       alert("Request submitted successfully");
